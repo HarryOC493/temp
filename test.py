@@ -13,9 +13,21 @@ def receive_data():
     return data
 
 def parse_sensor_data(data):
-    # Split the received data by commas and convert to float values
-    sensor_values = [float(value) for value in data.split(',')]
-    return sensor_values
+    # Split the received data by commas
+    values = data.split(',')
+    
+    # Check if the data has the expected number of values (10 in this case)
+    if len(values) != 10:
+        print("Received data does not have the expected number of values.")
+        return None
+    
+    try:
+        # Convert each value to a float and return as a list
+        sensor_values = [float(value) for value in values]
+        return sensor_values
+    except ValueError as e:
+        print("Error converting data to float:", e)
+        return None
 
 def main():
     try:
