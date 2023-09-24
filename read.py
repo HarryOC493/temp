@@ -2,7 +2,7 @@ import serial
 import time
 
 # Replace 'YOUR_SERIAL_PORT' with the actual serial port of your Arduino (e.g., '/dev/ttyUSB0' or 'COM3')
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 
 # Function to send a request for sensor data to the Arduino
 def request_sensor_data():
@@ -22,6 +22,9 @@ try:
     # Open the serial connection only once
     if not ser.is_open:
         ser.open()
+
+        # Add a 20-second delay for Arduino initialization
+        time.sleep(20)
 
     while True:
         request_sensor_data()
