@@ -3,6 +3,8 @@ import time
 
 # Replace 'YOUR_SERIAL_PORT' with the actual serial port of your Arduino (e.g., '/dev/ttyUSB0' or 'COM3')
 ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+time.sleep(20)
+print("Created serial connection")
 
 # Function to send a request for sensor data to the Arduino
 def request_sensor_data():
@@ -28,6 +30,7 @@ try:
         print("Should have initalised")
 
     while True:
+        print("Requesting data")
         request_sensor_data()
         sensor_values = read_sensor_data()
 
