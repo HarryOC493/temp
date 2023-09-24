@@ -8,7 +8,7 @@ print("Created serial connection")
 
 # Function to send a request for sensor data to the Arduino
 def request_sensor_data():
-    ser.write(b'R')
+    ser.write(b'R')  # Encode the string 'R' to bytes
 
 # Function to read and parse sensor data from the Arduino
 def read_sensor_data():
