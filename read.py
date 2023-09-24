@@ -1,24 +1,24 @@
 import serial
 
-# Define the serial port and baud rate
-ser = serial.Serial('/dev/ttyACM0', 115200)  # Update with the correct port name
+# Replace 'YOUR_SERIAL_PORT' with the actual serial port of your Arduino (e.g., '/dev/ttyUSB0' or 'COM3')
+ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
 
-def request_data():
-    # Send a request to the Arduino to request data
+# Function to send a request for sensor data to the Arduino
+def request_sensor_data():
     ser.write(b'R')
 
-def receive_and_print_data():
-    # Read data from the Arduino until a newline character is received
-    data = ser.readline().decode().strip()
-    print("Received Data:", data)
-
-def main():
-    try:
+# Main loop to continuously send 'R' and print responses until a blank line is received
+try:
+    while True:
+        request_sensor_data()
+        
+        # Read and print responses until a blank line is received
         while True:
-            request_data()  # Send a request for data
-            receive_and_print_data()  # Receive and print sensor data from Arduino
-    except KeyboardInterrupt:
-        print("Script terminated.")
+            line = ser.readline().decode().strip()
+            if not line:
+                break
+            print(line)
 
-if __name__ == "__main__":
-    main()
+except KeyboardInterrupt:
+    print("Exiting...")
+    ser.close()
