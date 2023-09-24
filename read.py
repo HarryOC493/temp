@@ -25,6 +25,7 @@ try:
 
         # Add a 20-second delay for Arduino initialization
         time.sleep(20)
+        print("Should have initalised")
 
     while True:
         request_sensor_data()
