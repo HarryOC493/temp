@@ -7,6 +7,8 @@ ser = serial.Serial('/dev/ttyACM0', 9600)
 # Function to send a request for sensor data to the Arduino
 def request_sensor_data():
     ser.write(b'R')
+    time.sleep(20)
+    print("Should have initalised by now")
 
 # Main loop to continuously request and read data from the Arduino
 try:
