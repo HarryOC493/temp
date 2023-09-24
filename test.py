@@ -1,46 +1,34 @@
 import serial
+import time
 
-# Define the serial port and baud rate
-ser = serial.Serial('/dev/ttyACM0', 115200)  # Update with the correct port name
+# Replace 'YOUR_SERIAL_PORT' with the actual serial port of your Arduino (e.g., '/dev/ttyUSB0' or 'COM3')
+ser = serial.Serial('dev/TTYACM0', 115200, timeout=1)
 
-def request_data():
-    # Send a request to the Arduino to request data
+# Function to send a request for sensor data to the Arduino
+def request_sensor_data():
     ser.write(b'R')
 
-def receive_data():
-    # Read data from the Arduino until a newline character is received
+# Function to read and parse sensor data from the Arduino
+def read_sensor_data():
     data = ser.readline().decode().strip()
-    return data
+    sensor_values = [float(val) for val in data.split('\t')]
+    return sensor_values
 
-def parse_sensor_data(data):
-    # Split the received data by commas
-    values = data.split(',')
-    
-    # Check if the data has the expected number of values (10 in this case)
-    if len(values) != 10:
-        print("Received data does not have the expected number of values.")
-        return None
-    
-    try:
-        # Convert each value to a float and return as a list
-        sensor_values = [float(value) for value in values]
-        return sensor_values
-    except ValueError as e:
-        print("Error converting data to float:", e)
-        return None
+# Main loop to continuously request and read sensor data
+try:
+    while True:
+        request_sensor_data()
+        sensor_values = read_sensor_data()
+        
+        # Store sensor values in a list (sensor_values)
+        # You can access individual sensor values like sensor_values[0], sensor_values[1], etc.
+        
+        # Print the sensor values for demonstration
+        print("Sensor Values:", sensor_values)
 
-def main():
-    try:
-        while True:
-            request_data()  # Send a request for data
-            sensor_data = receive_data()  # Receive sensor data from Arduino
-            if sensor_data.startswith('Data:'):
-                sensor_data = sensor_data[5:]  # Remove the "Data:" prefix
-                sensor_values = parse_sensor_data(sensor_data)
-                # Print or process the sensor values as needed
-                print("Received Sensor Values:", sensor_values)
-    except KeyboardInterrupt:
-        print("Script terminated.")
+        # Add a delay to control the data update rate (in seconds)
+        time.sleep(1)  # Adjust the sleep duration as needed
 
-if __name__ == "__main__":
-    main()
+except KeyboardInterrupt:
+    print("Exiting...")
+    ser.close()
