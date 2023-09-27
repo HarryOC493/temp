@@ -1,7 +1,7 @@
 import serial
 
 # Define the Arduino's serial port (change this to your port)
-arduino_port = "/dev/ttyUSB0"  # Linux example, may vary on Windows or macOS
+arduino_port = "/dev/ttyACM0"  # Linux example, may vary on Windows or macOS
 
 # Initialize serial communication with the Arduino
 ser = serial.Serial(arduino_port, baudrate=9600, timeout=1)
