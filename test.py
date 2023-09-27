@@ -8,12 +8,16 @@ ser = serial.Serial(arduino_port, baudrate=9600, timeout=1)
 
 try:
     while True:
-        # Send a request to the Arduino (you can modify this command)
-        ser.write(b"GetData\n")
+        # Read the incoming data
+        line = ser.readline().decode().strip()
 
-        # Read and print the response from the Arduino
-        response = ser.readline().decode().strip()
-        print("Arduino Data:", response)
+        # Check if the data starts with the specified header
+        if line.startswith("SENSOR_DATA:"):
+            # Process the sensor data (remove the header and convert to int)
+            sensor_data = int(line[len("SENSOR_DATA:"):])
+            print("Received Sensor Data:", sensor_data)
+
+        # Add other code here as needed...
 
 except KeyboardInterrupt:
     print("Keyboard interrupt detected. Exiting...")
