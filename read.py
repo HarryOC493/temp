@@ -18,7 +18,7 @@ try:
 
         # Add a 20-second delay for Arduino initialization
         time.sleep(20)
-        print("Should have initalised")
+        print("Should have initialized")
 
     while True:
         print("Requesting data")
