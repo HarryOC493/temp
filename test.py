@@ -1,38 +1,23 @@
 import serial
-import time
 
-# Replace 'YOUR_SERIAL_PORT' with the actual serial port of your Arduino (e.g., '/dev/ttyUSB0' or 'COM3')
-ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+# Define the Arduino's serial port (change this to your port)
+arduino_port = "/dev/ttyUSB0"  # Linux example, may vary on Windows or macOS
 
-# Function to send a request for sensor data to the Arduino
-def request_sensor_data():
-    ser.write(b'R')
+# Initialize serial communication with the Arduino
+ser = serial.Serial(arduino_port, baudrate=9600, timeout=1)
 
-# Function to read and parse sensor data from the Arduino
-def read_sensor_data():
-    line = ser.readline().decode().strip()
-    if line.startswith("SENSOR_DATA:"):
-        data = line[len("SENSOR_DATA:"):]
-        sensor_values = [float(val) for val in data.split('\t')]
-        return sensor_values
-    return None  # Return None if the line doesn't contain sensor data
-
-# Main loop to continuously request and read sensor data
 try:
     while True:
-        request_sensor_data()
-        sensor_values = read_sensor_data()
+        # Send a request to the Arduino (you can modify this command)
+        ser.write(b"GetData\n")
 
-        if sensor_values is not None:
-            # Store sensor values in a list (sensor_values)
-            # You can access individual sensor values like sensor_values[0], sensor_values[1], etc.
-
-            # Print the sensor values for demonstration
-            print("Sensor Values:", sensor_values)
-
-        # Add a delay to control the data update rate (in seconds)
-        time.sleep(1)  # Adjust the sleep duration as needed
+        # Read and print the response from the Arduino
+        response = ser.readline().decode().strip()
+        print("Arduino Data:", response)
 
 except KeyboardInterrupt:
-    print("Exiting...")
+    print("Keyboard interrupt detected. Exiting...")
+
+finally:
+    # Close the serial connection
     ser.close()
