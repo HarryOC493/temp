@@ -9,8 +9,7 @@ ser = serial.Serial(arduino_port, baudrate=115200, timeout=1)
 try:
     while True:
         # Read the incoming data
-        line = ser.readline().decode().strip()
-
+        line = ser.readline()
         # Print all serial data received from the Arduino
         print("Arduino Data:", line)
 
