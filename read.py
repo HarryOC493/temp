@@ -5,6 +5,4 @@ while True:
 	data = arduino.readline()[:-2] #the last bit gets rid of the new-line chars
 	if data:
 		print(data)
-		arduino.flushInput()  # Clear the input buffer
-		time.sleep(0.2)
 
