@@ -3,7 +3,7 @@ import serial
 # Define the Arduino's serial port (change this to your port)
 #arduino_port = "/dev/ttyACM0"  # Linux example, may vary on Windows or macOS
 
-arduino_port = = serial.Serial(
+arduino_port = serial.Serial(
     port="/dev/ttyTHS1",
     baudrate=115200,
     bytesize=serial.EIGHTBITS,
