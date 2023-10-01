@@ -4,15 +4,15 @@ import serial
 arduino_port = "/dev/ttyACM0"  # Linux example, may vary on Windows or macOS
 
 # Initialize serial communication with the Arduino
-#ser = serial.Serial(arduino_port, baudrate=115200, timeout=1)
+ser = serial.Serial(arduino_port, baudrate=115200, timeout=1)
 
-ser = serial.Serial(
-    port="/dev/ttyTHS1",
-    baudrate=115200,
-    bytesize=serial.EIGHTBITS,
-    parity=serial.PARITY_NONE,
-    stopbits=serial.STOPBITS_ONE,
-)
+#ser = serial.Serial(
+#    port="/dev/ttyTHS1",
+#    baudrate=115200,
+#    bytesize=serial.EIGHTBITS,
+#    parity=serial.PARITY_NONE,
+#    stopbits=serial.STOPBITS_ONE,
+#)
 try:
     while True:
         # Read the incoming data
