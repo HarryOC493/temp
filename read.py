@@ -2,7 +2,7 @@ import smbus
 import time
 
 # Define constants
-I2C_BUS = 1  # Use bus 1 for I2C communication on the Jetson Nano
+I2C_BUS = 0  # Use bus 1 for I2C communication on the Jetson Nano
 MPU6050_ADDRESS = 0x68  # MPU6050 I2C address
 
 # MPU6050 register addresses
