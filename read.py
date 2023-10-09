@@ -18,11 +18,16 @@ try:
         if "Linear Acceleration" in line:
             # Extract linear acceleration values
             print(line)
-            values = line.split('\t')
-            print(values)
-            linear_values = [float(val.split(': ')[1]) for val in values[1:4]]
-            print(linear_values)
-            linear_acceleration_data.append(linear_values)
+            index_of_x = line.find('X')
+            # Check if 'X' is found in the string
+            if index_of_x != -1:
+                # Slice the string to remove everything before 'X'
+                line = line[index_of_x:]
+                values = line.split('\t')
+                print(values)
+                linear_values = [float(val.split(': ')[1]) for val in values[1:4]]
+                print(linear_values)
+                linear_acceleration_data.append(linear_values)
         
         elif "Angular Velocity" in line:
             # Extract angular velocity values
