@@ -1,5 +1,6 @@
 import serial
 import re
+import math
 
 # Define the Arduino's serial port (change this to your port)
 arduino_port = "/dev/ttyACM0"  # Linux example, may vary on Windows or macOS
@@ -26,8 +27,9 @@ try:
             numeric_values = [float(num) for num in re.findall(r'-?\d+\.\d+', line)]
             
             if len(numeric_values) == 3:
-                angular_velocity = numeric_values
-                print("Angular Velocity (deg/s): X:", angular_velocity[0], "Y:", angular_velocity[1], "Z:", angular_velocity[2])
+                # Convert angular velocity from deg/s to rad/s
+                angular_velocity = [math.radians(value) for value in numeric_values]
+                print("Angular Velocity (rad/s): X:", angular_velocity[0], "Y:", angular_velocity[1], "Z:", angular_velocity[2])
 
 except KeyboardInterrupt:
     print("Keyboard interrupt detected. Exiting...")
