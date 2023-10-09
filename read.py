@@ -27,6 +27,15 @@ try:
             angular_values = [float(val.split(': ')[1]) for val in values[1:4]]
             angular_velocity_data.append(angular_values)
 
+        # Print the collected data
+        print("Linear Acceleration Data:")
+        for data in linear_acceleration_data:
+            print(data)
+        
+        print("Angular Velocity Data:")
+        for data in angular_velocity_data:
+            print(data)
+
 except KeyboardInterrupt:
     print("Keyboard interrupt detected. Exiting...")
 
@@ -34,11 +43,4 @@ finally:
     # Close the serial connection
     ser.close()
 
-# Print the collected data
-print("Linear Acceleration Data:")
-for data in linear_acceleration_data:
-    print(data)
 
-print("Angular Velocity Data:")
-for data in angular_velocity_data:
-    print(data)
