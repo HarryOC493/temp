@@ -6,8 +6,8 @@ arduino_port = "/dev/ttyACM0"  # Linux example, may vary on Windows or macOS
 # Initialize serial communication with the Arduino
 ser = serial.Serial(arduino_port, baudrate=9600, timeout=1)
 
-linear_acceleration_data = []
-angular_velocity_data = []
+linear_acceleration = [[0.0, 0.0, 0.0]]  # Initial values
+angular_velocity = [[0.0, 0.0, 0.0]]  # Initial values
 
 try:
     while True:
@@ -17,35 +17,15 @@ try:
         # Check if the line contains relevant data
         if "Linear Acceleration" in line:
             # Extract linear acceleration values
-            print(line)
-            index_of_x = line.find('X')
-            # Check if 'X' is found in the string
-            if index_of_x != -1:
-                # Slice the string to remove everything before 'X'
-                line = line[index_of_x:]
-                values = line.split('\t')
-                print(values)
-                linear_values = [float(val.split(': ')[1]) for val in values[1:4]]
-                for val in linear_values:
-                    val = val[3:]
-                print(linear_values)
-                linear_acceleration_data.append(linear_values)
-        
+            values = line.split('\t')
+            linear_values = [float(val.split(': ')[1]) for val in values[1:4]]
+            linear_acceleration[0] = linear_values
+
         elif "Angular Velocity" in line:
             # Extract angular velocity values
             values = line.split('\t')
             angular_values = [float(val.split(': ')[1]) for val in values[1:4]]
-            angular_velocity_data.append(angular_values)
-        False
-        
-        # Print the collected data
-        print("Linear Acceleration Data:")
-        for data in linear_acceleration_data:
-            print(data)
-        
-        print("Angular Velocity Data:")
-        for data in angular_velocity_data:
-            print(data)
+            angular_velocity[0] = angular_values
 
 except KeyboardInterrupt:
     print("Keyboard interrupt detected. Exiting...")
@@ -54,4 +34,9 @@ finally:
     # Close the serial connection
     ser.close()
 
+# Print the collected data
+print("Current Linear Acceleration:")
+print(linear_acceleration[0])
 
+print("Current Angular Velocity:")
+print(angular_velocity[0])
