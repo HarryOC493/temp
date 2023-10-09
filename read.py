@@ -17,8 +17,11 @@ try:
         # Check if the line contains relevant data
         if "Linear Acceleration" in line:
             # Extract linear acceleration values
+            print(line)
             values = line.split('\t')
+            print(values)
             linear_values = [float(val.split(': ')[1]) for val in values[1:4]]
+            print(linear_values)
             linear_acceleration_data.append(linear_values)
         
         elif "Angular Velocity" in line:
@@ -26,7 +29,8 @@ try:
             values = line.split('\t')
             angular_values = [float(val.split(': ')[1]) for val in values[1:4]]
             angular_velocity_data.append(angular_values)
-
+        False
+        
         # Print the collected data
         print("Linear Acceleration Data:")
         for data in linear_acceleration_data:
