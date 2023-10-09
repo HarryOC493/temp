@@ -26,6 +26,8 @@ try:
                 values = line.split('\t')
                 print(values)
                 linear_values = [float(val.split(': ')[1]) for val in values[1:4]]
+                for val in linear_values:
+                    val = val[3:]
                 print(linear_values)
                 linear_acceleration_data.append(linear_values)
         
