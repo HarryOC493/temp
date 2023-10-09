@@ -1,13 +1,11 @@
 import serial
+import re
 
 # Define the Arduino's serial port (change this to your port)
 arduino_port = "/dev/ttyACM0"  # Linux example, may vary on Windows or macOS
 
 # Initialize serial communication with the Arduino
 ser = serial.Serial(arduino_port, baudrate=9600, timeout=1)
-
-linear_acceleration = [[0.0, 0.0, 0.0]]  # Initial values
-angular_velocity = [[0.0, 0.0, 0.0]]  # Initial values
 
 try:
     while True:
@@ -16,16 +14,20 @@ try:
 
         # Check if the line contains relevant data
         if "Linear Acceleration" in line:
-            # Extract linear acceleration values
-            values = line.split('\t')
-            linear_values = [float(val.split(': ')[1]) for val in values[1:4]]
-            linear_acceleration[0] = linear_values
+            # Extract numeric values from the line
+            numeric_values = [float(num) for num in re.findall(r'-?\d+\.\d+', line)]
+            
+            if len(numeric_values) == 3:
+                linear_acceleration = numeric_values
+                print("Linear Acceleration (m/s^2): X:", linear_acceleration[0], "Y:", linear_acceleration[1], "Z:", linear_acceleration[2])
 
         elif "Angular Velocity" in line:
-            # Extract angular velocity values
-            values = line.split('\t')
-            angular_values = [float(val.split(': ')[1]) for val in values[1:4]]
-            angular_velocity[0] = angular_values
+            # Extract numeric values from the line
+            numeric_values = [float(num) for num in re.findall(r'-?\d+\.\d+', line)]
+            
+            if len(numeric_values) == 3:
+                angular_velocity = numeric_values
+                print("Angular Velocity (deg/s): X:", angular_velocity[0], "Y:", angular_velocity[1], "Z:", angular_velocity[2])
 
 except KeyboardInterrupt:
     print("Keyboard interrupt detected. Exiting...")
@@ -33,10 +35,3 @@ except KeyboardInterrupt:
 finally:
     # Close the serial connection
     ser.close()
-
-# Print the collected data
-print("Current Linear Acceleration:")
-print(linear_acceleration[0])
-
-print("Current Angular Velocity:")
-print(angular_velocity[0])
