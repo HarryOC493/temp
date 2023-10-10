@@ -32,11 +32,13 @@ try:
                 print("Angular Velocity (rad/s): X:", angular_velocity_rad[0], "Y:", angular_velocity_rad[1], "Z:", angular_velocity_rad[2])
 
         elif "Heading (degrees)" in line:
-            # Extract heading value
-            heading_deg = float(re.search(r'-?\d+\.\d+', line).group())
-            heading_rad = math.radians(heading_deg)
-            print("Heading (degrees):", heading_deg)
-            print("Heading (radians):", heading_rad)
+            # Extract heading value if present
+            match = re.search(r'-?\d+\.\d+', line)
+            if match:
+                heading_deg = float(match.group())
+                heading_rad = math.radians(heading_deg)
+                print("Heading (degrees):", heading_deg)
+                print("Heading (radians):", heading_rad)
 
 except KeyboardInterrupt:
     print("Keyboard interrupt detected. Exiting...")
