@@ -34,7 +34,7 @@ try:
         elif "Heading (degrees)" in line:
             
             numeric_values = [float(num) for num in re.findall(r'-?\d+\.\d+', line)]
-            print(numeric_vales)
+            print(numeric_values)
             heading_deg = float(numeric_values)
             heading_rad = math.radians(heading_deg)
             print("Heading (degrees):", heading_deg)
