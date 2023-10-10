@@ -32,9 +32,7 @@ try:
                 print("Angular Velocity (rad/s): X:", angular_velocity_rad[0], "Y:", angular_velocity_rad[1], "Z:", angular_velocity_rad[2])
 
         elif "Heading (degrees)" in line:
-            print(line[19:])
-            numeric_values = [float(num) for num in re.findall(r'-?\d+\.\d+', line)]
-            print(numeric_values)
+            numeric_values = line[19:])
             heading_deg = float(numeric_values)
             heading_rad = math.radians(heading_deg)
             print("Heading (degrees):", heading_deg)
