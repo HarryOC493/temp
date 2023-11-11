@@ -46,9 +46,40 @@ float Read_Angle(float joint[7]) {
   return angle;
 }
 
+void printSensorVoltages() {
+  Serial.println("Sensor\tVMax\tVMin\tVoltage");
+  printVoltage(L_Thigh);
+  printVoltage(R_Thigh);
+  printVoltage(L_Knee);
+  printVoltage(R_Knee);
+  printVoltage(L_Ankle);
+  printVoltage(R_Ankle);
+  Serial.println(); // Blank line for readability
+}
+
+void printVoltage(float joint[7]) {
+  int sensorValue = analogRead((int)joint[4]);
+  float voltage = sensorValue * (3.3 / 1023.0); // Convert to voltage (0-5V)
+  Serial.print("Joint "); Serial.print((int)joint[4]); // Print joint number
+  Serial.print("\t");
+  Serial.print(joint[0], 2); // Print VMax
+  Serial.print("\t");
+  Serial.print(joint[1], 2); // Print VMin
+  Serial.print("\t");
+  Serial.println(voltage, 2); // Print current voltage
+}
+
 void loop() {
+  // Update angles and velocities for each joint
+  Read_Angle(L_Thigh);
+  Read_Angle(R_Thigh);
   Read_Angle(L_Knee);
-  // You can call Read_Angle for other joints in a similar manner here.
+  Read_Angle(R_Knee);
+  Read_Angle(L_Ankle);
+  Read_Angle(R_Ankle);
+
+  // Print the sensor voltages in a table format
+  printSensorVoltages();
 
   delay(1000); // Delay for a second (adjust as needed)
 }
