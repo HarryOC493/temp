@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Setup the serial connection (Change the COM port as necessary)
-ser = serial.Serial('/dev/tty.usbmodem14101', 9600)  # Update port
+ser = serial.Serial('/dev/cu.usbmodem14131', 9600)  # Update port
 
 # Setup the matplotlib plot
 plt.ion()  # Enable interactive mode
